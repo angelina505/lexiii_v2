@@ -1,0 +1,997 @@
+
+
+:root {
+  --noir: #000;
+  --gris: #f0f0f0;
+  --bordeaux: #661514;
+  --texte: #000;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Cardo', serif;
+  background:var(--gris);
+  color: var(--texte);
+  min-height: 100vh;
+  background-attachment: fixed; /* le dégradé reste fixe au scroll */
+}
+
+header {
+  background: var(--gris);
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+
+header::after {
+  content: "";
+  display: block;
+  height: 2px; /* fine ligne */
+  background-color: var(--bordeaux);
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+/* --- LOGO IMAGE --- */
+
+.logo img {
+  height: 45px;          /* augmente la taille réelle du SVG pour le zoomer */
+  width: auto;
+  /*transform: scale(0.8);   zoom visuel sans agrandir le canevas */
+  transform-origin: center;
+  display: block;
+  object-fit: contain;
+  object-position: center;
+  background: transparent;
+}
+
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  padding: 0rem 2rem;
+  background-color: var(--gris);
+}
+
+nav .logo {
+  display: flex;
+  align-items: center;
+  overflow: hidden; /* cache les éventuels débords dus au zoom */
+  height: 55px;     /* hauteur de la navbar */
+}
+
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--texte);
+  font-size: 1rem;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+nav a.active {
+  color: var(--bordeaux);
+}
+
+nav a:hover {
+  color: var(--bordeaux);
+}
+
+
+
+/* --- MOBILE --- */
+@media (max-width: 800px) {
+  nav {
+    position: relative;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  nav ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: var(--gris);
+    width: 100%;
+    padding: 2rem 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transform: translateY(-20px);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.35s ease;
+  }
+
+  nav ul.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  nav ul li a {
+    font-size: 1.1rem;
+  }
+}
+
+
+/* ---- NAV RESPONSIVE ---- */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 20;
+  position: relative;
+}
+
+/* Supprime les effets de hover indésirables */
+.menu-toggle:hover {
+  background: none;
+  box-shadow: none;
+}
+
+/* Barres du hamburger */
+.menu-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--texte);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Quand le menu est ouvert → les barres deviennent bordeaux */
+.menu-toggle.open span {
+  background-color: var(--bordeaux);
+}
+
+/* --- MOBILE --- */
+@media (max-width: 800px) {
+  nav {
+    position: relative;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+
+  nav ul.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  nav ul li a {
+    font-size: 1.1rem;
+  }
+}
+
+
+
+/* --- GESTION DE LA VISIBILITÉ DES LIENS --- */
+.mobile-only {
+  display: none !important; /* Caché par défaut */
+}
+
+.desktop-only {
+  display: block; /* Affiché par défaut */
+}
+
+
+/* --- MOBILE --- */
+@media (max-width: 800px) {
+  /* ... vos autres styles mobile ... */
+
+  /* Inversion de la visibilité pour mobile */
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    /* Utilise la même disposition que les autres liens de la nav-links mobile */
+    display: block !important; 
+    width: 100%; /* Important pour que le texte soit centré */
+    text-align: center;
+  }
+}
+
+/* Affichage du menu déroulant au survol sur Desktop (après 800px) */
+@media (min-width: 800px) {
+  /* Assurez-vous que l'élément parent LI est bien un flex item */
+  .dropdown {
+    display: flex; /* ou inline-block */
+    align-items: center;
+  }
+
+  /* Ajoutez la règle pour la nouvelle classe d'ouverture/fermeture */
+  .dropdown.open .dropdown-menu {
+    display: flex; /* Affiche le sous-menu en colonne */
+  }
+
+  /* Masque les liens "Mobile Only" sur desktop */
+  .mobile-only {
+    display: none !important;
+  }
+}
+
+/* --- MENU DÉROULANT --- */
+
+.dropdown {
+  position: relative; /* nécessaire pour positionner le sous-menu */
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 39px; /* colle au bas de la navbar (hauteur de 55px) */
+  left: -15px;
+  background-color: var(--gris);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  list-style: none;
+  padding: 0.5rem 0;
+  margin: 0;
+  /* display: none; */ /* caché par défaut */
+  flex-direction: column;
+  min-width: 180px;
+  z-index: 9;
+}
+
+@media (min-width: 800px) {
+  .dropdown-menu {
+  display: none; /* caché par défaut */
+}
+}
+
+.dropdown-menu li {
+  padding: 0rem 1rem;
+  text-align: left;
+}
+
+.dropdown-menu li a {
+  display: block;
+  color: var(--texte);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.dropdown-menu li a:hover, .dropdown-menu li a.active {
+  color: var(--bordeaux);
+}
+
+/* Affichage du menu quand ouvert */
+.dropdown.open .dropdown-menu {
+  display: flex;
+}
+
+
+
+
+/* ---- INTRO ---- */
+
+.intro { 
+  width: 100%; 
+  color: var(--texte); 
+  text-align: center; 
+  font-family: 'Cardo', serif; 
+  line-height: 1; 
+  box-sizing: border-box; 
+  padding-top: 0; 
+  padding-bottom: 3rem; 
+}
+
+.citation p { 
+  font-size: 1.2rem; 
+  margin: 0.5rem 0; 
+}
+
+/* Centrer l'image */
+.photo-fondateur {
+  display: block;
+  margin: 3rem auto; 
+  max-width: 80%;
+  max-height: 400px;
+}
+
+/* Justifier le texte sauf titres */
+.intro .texte-accueil p,
+.intro .italique p,
+.intro .gras {
+  text-align: justify;
+}
+
+/* TITRES (gauche + gras) */
+.intro h2 {
+  text-align: left;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.intro h4 {
+  text-align: left;
+  font-weight: 700;
+}
+
+/* Taille du texte */
+.intro p,
+.intro h4 {
+  font-size: 1.1rem;   /* même taille */
+  line-height: 1.5;
+}
+
+/* H1 (titre principal) */
+.intro h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 1rem 0;
+}
+
+/*Marge avec les bords*/
+.section-accueil {
+  padding: 3rem;
+}
+
+/* Italique et gras */
+
+.italique {
+  margin-top: 2.5rem;
+}
+
+.italique p {
+  font-style: italic;
+}
+
+.gras {
+  font-weight: bold;
+  padding: 1rem 3rem;
+}
+
+.commentaire-photo {
+  text-align: center;
+  font-weight: bold;
+  padding-bottom: 3rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .intro h1 {
+    font-size: 1.6rem;
+  }
+  .intro p,
+  .intro h4 {
+    font-size: 1rem;
+  }
+  /*Marge avec les bords*/
+  .section-accueil {
+    padding: 1.5rem;
+  }
+  .gras {
+    font-weight: bold;
+    padding: 1rem 1.5rem;
+  }
+}
+
+
+/* --- Animation au Scroll --- */
+
+/* État initial : L'élément est légèrement décalé vers le bas et invisible (opacité 0) */
+.scroll-anim {
+  opacity: 0;
+  transform: translateY(20px); /* Décalage initial */
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Durée de l'animation */
+}
+
+/* État 'visible' : L'élément est visible et revient à sa position d'origine */
+.scroll-anim.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* --- Animation de Révélation de Gauche à Droite --- */
+
+/* --- Animation "Arrivée de Gauche" (remplace l'ancien reveal-left) --- */
+
+.reveal-left {
+  opacity: 0; /* Initialement invisible */
+  transform: translateX(-100px); /* Part de 100px à gauche de sa position finale */
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Durée de l'animation */
+}
+
+/* Quand l'élément a la classe 'visible', il apparaît et se déplace vers sa position d'origine */
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0); /* Arrive à sa position finale */
+}
+
+/* --- Décalage des animations pour la liste d'arguments (Effet Stagger) --- */
+
+/* Appliquer les délais pour l'effet 'un par un' sur les LIs */
+.reveal-left.reveal-left-1 {
+  transition-delay: 0.1s; 
+}
+
+.reveal-left.reveal-left-2 {
+  transition-delay: 0.3s; 
+}
+
+.reveal-left.reveal-left-3 {
+  transition-delay: 0.5s; 
+}
+
+
+
+/* --- HERO IMAGE AVEC CITATION --- */
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 70vh; /* hauteur visible, ajustable */
+  overflow: hidden;
+}
+
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(60%); /* assombrit légèrement l’image pour la lisibilité du texte */
+}
+
+/* Texte superposé */
+.hero .citation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-70%, -50%);
+  color: white;
+  text-align: center;
+  font-style: italic; /* italique comme demandé */
+  font-family: 'Cardo', serif;
+  width: 85%;
+  max-width: 900px;
+}
+
+@media (max-width: 800px){
+  .hero .citation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  font-style: italic; /* italique comme demandé */
+  font-family: 'Cardo', serif;
+  width: 85%;
+  max-width: 900px;
+}
+}
+
+.hero .citation h1 {
+  color: white;
+  font-style: italic;
+}
+
+.hero .citation p {
+  color: white;
+  font-style: italic;
+}
+
+
+/* ---- SECTION ARGUMENTS ---- */
+.arguments {
+  background: var(--bordeaux);
+  color: white;
+  width: 100%;
+  margin: 0; /* pleine largeur */
+  border-radius: 0; /* supprime les coins arrondis */
+  padding: 4rem 3rem;
+  box-shadow: none;
+  text-align: center;
+}
+
+/* Conserve le bon rendu du texte et des listes */
+.arguments p {
+  text-align: justify;
+  line-height: 1.7;
+  margin: 0 auto 2rem;
+}
+
+.arguments ul {
+  list-style: none;
+  padding: 0;
+  margin: 2rem auto 0;
+}
+
+.arguments ul li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  text-align: left;
+  color: white;
+}
+
+.arguments ul li::before {
+  content: "➤";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: white;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* --- PRESTATIONS --- */
+
+.decouvrir-prestations {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 4rem 0 2rem;
+  color: var(--noir);
+  letter-spacing: 1px;
+}
+
+ /* --- RESPONSIVE --- */
+@media (max-width: 800px) {
+  .decouvrir-prestations {
+    font-size: 1.3rem;
+  }
+  .arguments {
+    padding: 3rem 1.5rem;
+  }
+  .arguments ul li {
+    font-size: 1rem;
+  }
+} 
+
+/* ---- SERVICES ---- */
+.services {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 4rem auto;
+  padding: 0 2rem;
+}
+
+.card {
+  background: var(--noir);
+  color: white;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  background-color: var(--bordeaux);
+  color: white;
+  transform: translateY(-4px);
+}
+
+.card h3 {
+  margin-top: 0;
+  font-size: 1.3rem;
+}
+
+/* Liens dans les cartes (pour éviter le bleu/souligné après clic) */
+.services a,
+.services a:visited,
+.services a:hover,
+.services a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+/* --- Styles initiaux de la carte pour un fade-in --- */
+.scroll-anim-card {
+  /* Initialement masqué et légèrement décalé vers le bas */
+  opacity: 0; 
+  transform: translateY(20px); 
+  /* La transition est appliquée à toutes les propriétés, y compris le 'hover' simulé */
+  transition: all 0.5s ease-out; 
+}
+
+/* L'état 'visible' permet à la carte d'apparaître doucement */
+.scroll-anim-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Styles d'activation (Simule le :hover) --- */
+.card-active {
+  background-color: var(--bordeaux) !important;
+  color: white !important;
+  transform: translateY(-4px) !important; /* Le saut */
+}
+
+
+/* ---- FOOTER ---- */
+footer {
+  background: linear-gradient(to bottom, #878274, #24221a);
+  margin-top: auto;
+  height: 150px;
+  text-align: center;
+  display: flex;
+  align-items: flex-end; 
+  justify-content: center;
+  padding: 2rem;
+  color: var(--gris);
+  font-size: 0.9rem;
+}
+
+footer .legal-link {
+  color: var(--gris)  ;
+  text-decoration: none;
+  margin-left: 0.3rem;
+  transition: color 0.3s;
+}
+
+footer .legal-link:hover {
+  color: var(--gris);
+  text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+
+/* --- Conteneur des rubriques --- */
+
+.rubriques {
+  margin: 5%;
+}
+
+.rubrique {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  max-width: 1400px;
+  margin: 5rem auto;
+  gap: 0;
+}
+
+/* --- Titres & sous-titres --- */
+.titre-prestation {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: left;
+}
+
+.titre {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 800px) {
+  .titre-prestation {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: left;
+  }
+
+  .titre {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+}
+
+.valeurs {
+  font-style: italic;
+  margin-bottom: 1.5rem;
+  color: var(--texte);
+}
+
+.question {
+  font-weight: bold;
+  text-decoration: underline;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+/* --- Images Desktop vs Mobile (classes présentes mais non nécessaires) --- */
+.image-desktop {
+  display: block;
+}
+
+.image-mobile {
+  display: none;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+
+/* image et texte côte à côte */
+.rubrique img {
+  width: 40%;
+  object-fit: cover;
+  height: auto;
+}
+
+/* bloc texte */
+.rubrique .texte {
+  width: 60%;
+  background-color: var(--gris);
+  color: var(--texte);
+  padding: 3rem;
+  text-align: justify;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+/*  VERSION MOBILE  */
+
+@media (max-width: 800px) {
+
+  .rubriques {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .rubrique {
+    flex-direction: column;
+    margin: 2rem 0.4rem;
+    max-width: 100%;
+    align-items: stretch;
+    overflow: hidden;
+  }
+
+  /* Image au-dessus du texte, largeur 100%, hauteur fixe */
+  .rubrique img {
+    width: 100%;
+    height: 220px;            /* hauteur réglable */
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  /* Bloc texte occupe toute la largeur */
+  .rubrique .texte {
+    width: 100%;
+    background-color: var(--gris);
+    color: var(--texte);
+    padding: 2rem;
+    text-align: justify;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  
+  .rubrique .titre-prestation {
+    color: var(--texte);
+    padding: 2rem 0;
+    margin: 0;
+    text-align: left;
+    font-size: 1.4rem;
+    font-weight: bold;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .rubrique .titre-prestation span {
+    position: relative;
+    z-index: 2;
+  }
+
+  .rubrique .valeurs {
+    margin-top: 1.5rem;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+  }
+
+  .rubrique + .rubrique {
+    margin-top: 3rem;
+  }
+
+  .rubrique p, 
+  .rubrique ul, 
+  .rubrique li {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .rubriques {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+}
+
+/* DEVENIR MEMBRE */
+
+.devenir-membre {
+  background-color: transparent;
+  text-align: center;
+  padding: 3rem 1rem;
+  margin-bottom: 3rem;
+  font-size: 1.3rem;
+}
+
+.devenir-membre a {
+  color: var(--bordeaux);           /* bordeaux */
+  font-weight: 700;         /* gras */
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.devenir-membre a:hover,
+.devenir-membre a:visited,
+.devenir-membre a:focus {
+  color: var(--bordeaux);           /* aucune variation */
+  text-decoration: none;
+}
+
+/* Marges latérales larges pour très grands écrans */
+@media (min-width: 1600px) {
+  .rubrique {
+    margin-left: 10vw;
+    margin-right: 10vw;
+  }
+}
+
+.offre {
+  text-align: center;
+}
+
+.seances {
+  margin-bottom: 2.5rem;
+}
+
+
+/* ---- CONTACT ---- */
+.contact {
+  background: var(--gris);
+  border-radius: 16px;
+  max-width: 700px;
+  margin: 5rem auto;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+@media (max-width: 800px) {
+ .contact {
+  margin: 5rem 2rem;
+}
+}
+
+.contact form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+input, textarea {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: inherit;
+  resize: none;
+}
+
+button {
+  background-color: var(--bordeaux);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.9rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #000;
+}
+
+.intro-contact {
+  text-align: center;
+  margin: 3rem;
+}
+
+
+
+/* ---- MENTIONS LÉGALES ---- */
+.mentions-legales {
+  max-width: 900px;
+  margin: 5rem auto;
+  padding: 0 2rem 5rem;
+  color: var(--gris);
+  background-color: var(--gris);
+}
+
+.mentions-legales h1 {
+  font-size: 2.2rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  font-weight: 700;
+  color: var(--noir);
+}
+
+.mentions-legales h2 {
+  font-size: 1.3rem;
+  margin-top: 2rem;
+  margin-bottom: 0.8rem;
+  font-weight: 700;
+  color: var(--bordeaux);
+}
+
+.mentions-legales p {
+  line-height: 1.7;
+  font-size: 1rem;
+  color: var(--texte);
+  margin-bottom: 1.2rem;
+  text-align: justify;
+}
+
+.mentions-legales section + section {
+  margin-top: 2.5rem;
+}

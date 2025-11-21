@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XIII</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #F0F0F0;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+      opacity: 1;
+      transition: opacity 1s ease; /* fondu sortant */
+    }
+
+    body.fade-out {
+      opacity: 0;
+    }
+
+    .logo-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-58%, -40%);
+      width: 800px;
+      max-width: 70%;
+      height: auto;
+    }
+
+    .logo-container img {
+      width: 100%;
+      height: auto;
+      user-select: none;
+      pointer-events: none;
+      opacity: 0;
+      animation: fadeBlink 3s forwards;
+    }
+
+    /* Animation : apparition, clignotement, disparition */
+    @keyframes fadeBlink {
+      0% { opacity: 0; }
+      20% { opacity: 1; }
+      50% { opacity: 0; }
+      70% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body onclick="fadeAndRedirect()">
+
+  <div class="logo-container">
+    <img src="xiii.png" alt="Logo XIII Elite Club" class="xiii">
+  </div>
+
+  <script>
+    function fadeAndRedirect() {
+      document.body.classList.add('fade-out');
+      setTimeout(() => {
+        window.location.href = 'accueil.html';
+      }, 1000); // délai du fondu
+    }
+
+    // Redirection automatique après clignotement + pause
+    setTimeout(() => {
+      fadeAndRedirect();
+    }, 3500);
+  </script>
+
+</body>
+</html>

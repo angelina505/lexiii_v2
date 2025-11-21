@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XIII - Mentions légales</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo">
+        <a href="accueil.html">
+          <img src="logo.png">
+        </a>
+      </div>
+
+      <button class="menu-toggle" aria-label="Ouvrir le menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-links">
+        <li><a href="accueil.html">Accueil</a></li>
+        <li><a href="prestations.html">Prestations</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="mentions-legales">
+    <h1>Mentions légales</h1>
+    
+    <section class="infos-légales">
+      <p>
+        Raison sociale : DIKILA BRANDOME 
+        <br>
+        Forme juridique : Entrepreneur individuel
+        <br>
+        SIREN : 880847355
+        <br>
+        Responsable : DIKILA Brandome
+      </p>
+    </section>
+
+    <section>
+      <p>
+        Conformément à la loi n°2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique, nous vous informons que le site internet LIEN est la propriété de Mr Brandome Dikila.
+        <br>
+        Le site internet LIEN a été conçu par Angélina Botella.
+        <br>
+        Le site internet LIEN est hébergé sur les matériels informatiques de la société ??? dont le siège social est : ???. 
+        <br>
+        Le site LIEN est régi par le droit français ; les visiteurs ayant accès au site de l’étranger, doivent s’assurer du respect des lois localement applicables. 
+        <br>
+        Les mentions légales pouvant être modifiées à tout moment et sans préavis, nous vous engageons à les consulter régulièrement.
+      </p>
+    </section>
+
+    <section>
+      <h2>Hébergement</h2>
+      <p>Contenu.</p>
+    </section>
+
+    <section>
+      <h2>Propriété intellectuelle</h2>
+      <p>
+        Mr Brandome Dikila détient, se réserve et conserve tous les droits de propriété, notamment intellectuelle, y compris les droits de reproduction sur le présent site et les éléments qu’il contient. En conséquence et notamment toute reproduction partielle ou totale du présent site et des éléments qu’il contient est strictement interdite sans autorisation écrite de la société ???. 
+        <br>
+        Les logos et tous autres signes distinctifs contenus sur ce site sont la propriété de Mr Brandome Dikila ou font l’objet d’une autorisation d’utilisation. Aucun droit ou licence ne saurait être attribué sur l’un quelconque de ces éléments sans l’autorisation écrite de Mr Brandome Dikila ou du tiers détenteur des droits.
+      </p>
+    </section>
+
+    <section>
+      <h2>Responsabilité</h2>
+      <p>
+        L’utilisateur du site web « XIII » reconnaît avoir pris connaissance des présentes conditions d’utilisation du site et s’engage à les respecter. 
+
+        Mr Bradome Dikila ne saurait être tenue pour responsable des dommages directs ou indirects qui pourraient résulter de l’accès au site ou de l’utilisation du site et/ou de ces informations, y compris l’inaccessibilité, les pertes de données, détériorations, destructions ou virus qui pourraient affecter l’équipement informatique de l’utilisateur et/ou de la présence de virus sur son site. 
+
+        Bien que Mr Brandome Dikila s’efforce de fournir un contenu fiable sur son site, il ne garantit pas que son contenu soit exempt d’inexactitudes ou d’omissions et ne saurait être tenu pour responsable des erreurs ou omissions, d’une absence de disponibilité des informations et des services. Mr Brandome Dikila se réserve à tout moment et sans préavis le droit d’apporter des améliorations et/ou des modifications au contenu de son site. En conséquence, l’utilisateur reconnaît se servir de ses informations sous sa responsabilité exclusive.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> XIII — Elite Club  
+    · <a href="mentions-legales.html" class="legal-link">Mentions légales</a>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const toggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    toggle.addEventListener('click', () => {
+      toggle.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+  </script>
+
+</body>
+</html>

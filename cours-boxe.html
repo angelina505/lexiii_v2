@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XIII – Private Coaching</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo">
+        <a href="accueil.html">
+          <img src="logo.png">
+        </a>
+      </div>
+
+      <button class="menu-toggle" aria-label="Ouvrir le menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-links">
+        <li><a href="accueil.html">Accueil</a></li>
+        
+        <li class="dropdown desktop-only"> 
+          <a href="#" id="prestations-btn" class="active">Prestations</a>
+          <ul class="dropdown-menu">
+            <li><a href="preparation-physique.html">Préparation physique générale</a></li>
+            <li><a href="cours-boxe.html" class="active">Cours de boxe</a></li>
+            <li><a href="coaching-personnalise.html">Coaching personnalisé</a></li>
+          </ul>
+        </li>
+
+        <li class="mobile-only"><a href="preparation-physique.html">Préparation physique générale</a></li>
+        <li class="mobile-only"><a href="cours-boxe.html" class="active">Cours de boxe</a></li>
+        <li class="mobile-only"><a href="coaching-personnalise.html">Coaching personnalisé</a></li>
+        
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+  </header>
+
+  
+
+
+
+
+<section class="rubriques">
+  <div class="rubrique rubrique">
+    <img src="boxe1.jpg">
+      <div class="texte">
+
+        <div class="scroll-anim">
+            <div class="titre-prestation"><span>Cours de boxe</span></div>
+            <div class="valeurs">Puissance. Contrôle. Présence.</div>
+        </div>
+
+        <p class="scroll-anim">
+          Un entraînement de boxe pensé pour celles et ceux qui recherchent plus qu’un simple défouloir : une discipline exigeante, un art du mouvement, un exutoire stratégique.
+          <br>
+          Chaque séance est un face-à-face précis et rythmé, où l’on travaille autant le physique que le mental.
+          Travail des appuis, vitesse d’exécution, puissance maîtrisée, cardio affûté et techniques de frappe : tout est ajusté à votre niveau, votre progression et votre énergie du jour.
+          <br>
+          Vous serez coaché avec l’exigence des professionnels, mais dans un cadre confidentiel, respectueux de votre rythme et de votre agenda.
+        </p>
+
+        <div class="question" class="scroll-anim">Ce que vous venez chercher ?</div>
+        <p class="scroll-anim">
+          Un corps plus explosif,
+          <br>Une confiance renforcée,
+          <br>Un mental affûté,
+          <br>Et la capacité à rester calme sous pression… en affaires comme en combat.
+          <br>La boxe n’est pas un sport, c’est une attitude. Et vous êtes là pour l’incarner.
+        </p>
+      </div>
+    </div>
+</section>
+
+
+<section class="offre scroll-anim">
+  <p class="titre">Nos offres</p>
+  <p class="seances">
+     Séance à l’unité (1h)
+    <br>
+    Pack 5 séances
+    <br>
+    Pack 10 séances</p>
+  <p class="abonnement">
+     Abonnement “Essentiel“ 4 séances/mois engagement 12 mois
+    <br>
+    Abonnement “Performance“ 8 séances/mois engagement 6 mois
+    <br>
+    Abonnement “Signature“ 12 séances/mois engagement 3 mois
+  </p>
+</section>
+
+
+<div class="devenir-membre">
+<a href="contact.html">Devenir membre</a>
+</div>
+
+
+  <footer>
+    © &nbsp; <span id="year"></span> &nbsp; XIII — Private Coaching  
+    · <a href="mentions-legales.html" class="legal-link">Mentions légales</a>
+  </footer>
+
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+  <script>
+  // Script pour l'ouverture/fermeture du menu déroulant au clic sur Desktop
+  const prestationsBtn = document.getElementById('prestations-btn');
+  const dropdownLi = prestationsBtn.closest('.dropdown');
+  const navLinks = document.querySelector('.nav-links'); // On utilise l'élément parent
+
+  if (prestationsBtn) {
+    // 1. Ouvrir/fermer le menu au clic sur "Prestations"
+    prestationsBtn.addEventListener('click', (event) => {
+      // Empêche le comportement par défaut (aller à '#' et recharger)
+      event.preventDefault(); 
+      
+      // Ferme le menu mobile si par accident il est ouvert (bien que géré par le media query)
+      if (window.innerWidth <= 800) return; 
+
+      // Toggle la classe 'open' sur l'élément li.dropdown
+      dropdownLi.classList.toggle('open');
+      
+      // Assurez-vous que le clic n'atteint pas le document immédiatement (propagation)
+      event.stopPropagation();
+    });
+
+    // 2. Fermer le menu si l'utilisateur clique en dehors (un clic "globale")
+    document.addEventListener('click', (event) => {
+      // Vérifie si le clic a eu lieu en dehors du conteneur du menu déroulant (.dropdown)
+      // et que le menu mobile n'est pas ouvert (car le menu déroulant est caché sur mobile)
+      if (!dropdownLi.contains(event.target) && dropdownLi.classList.contains('open') && window.innerWidth > 800) {
+        dropdownLi.classList.remove('open');
+      }
+    });
+
+    // Optionnel : Empêcher la fermeture si l'utilisateur clique *dans* le menu
+    // (pour les navigateurs qui pourraient le propager différemment)
+    const dropdownMenu = dropdownLi.querySelector('.dropdown-menu');
+    dropdownMenu.addEventListener('click', (event) => {
+      event.stopPropagation();
+      // Le lien continuera vers la page, et le menu se fermera au rechargement.
+    });
+  }
+</script>
+
+<script>
+  // Variable globale pour gérer l'état d'animation et le timer des cartes
+  let cardsAnimationLaunched = false;
+  let cardSequenceTimer = null;
+
+  // --- Fonctions d'aide ---
+
+  // Fonction utilitaire pour vérifier si un élément est dans le viewport
+  function isElementInViewport(el) {
+    const rect = el.getBoundingClientRect();
+    const offset = 100; // Décalage pour démarrer l'animation un peu avant
+
+    return (
+      rect.top <= (window.innerHeight - offset || document.documentElement.clientHeight - offset)
+    );
+  }
+
+  // Fonction pour lancer la séquence séquentielle des cartes (1.2s de décalage)
+  function startCardSequence() {
+      // S'assurer qu'elle ne se lance qu'une seule fois
+      if (cardsAnimationLaunched) return;
+      cardsAnimationLaunched = true; 
+
+      const cards = document.querySelectorAll('.card.scroll-anim-card');
+      const hoverDuration = 1000; // Durée du "hover" : 1 seconde
+      const staggerDelay = 1200;  // Décalage entre chaque carte : 1.2 seconde
+
+      cards.forEach((card, index) => {
+          
+          const startTime = index * staggerDelay;
+          const endTime = startTime + hoverDuration;
+
+          // Lancer l'effet de survol
+          setTimeout(() => {
+              card.classList.add('card-active');
+          }, startTime);
+
+          // Retirer l'effet de survol
+          setTimeout(() => {
+              card.classList.remove('card-active');
+          }, endTime);
+      });
+  }
+
+
+  // --- Fonction principale de gestion du Scroll ---
+
+  function handleScrollAnimation() {
+    
+    // Cible tous les éléments d'animation (pour les pages prestations et accueil)
+    const elementsToAnimate = document.querySelectorAll('.scroll-anim, .reveal-left, .scroll-anim-card'); 
+    
+    // Cible la section des cartes (uniquement pour l'accueil, mais sans erreur ici)
+    const cardsSection = document.querySelector('.services');
+
+    elementsToAnimate.forEach((el) => {
+      
+      // Logique générale d'apparition pour scroll-anim et reveal-left
+      if (!el.classList.contains('visible') && isElementInViewport(el)) {
+          el.classList.add('visible');
+      }
+    });
+
+    // Logique spécifique : Lancer l'animation des cartes (si présente)
+    // Elle se déclenche quand la section des cartes devient visible et n'a pas été animée.
+    if (cardsSection && cardsSection.classList.contains('visible') && !cardsAnimationLaunched) {
+      
+      // Délai de 100ms pour s'assurer que l'apparition CSS de la section est terminée.
+      clearTimeout(cardSequenceTimer);
+      cardSequenceTimer = setTimeout(startCardSequence, 100); 
+    }
+  }
+
+  // --- Écouteurs d'événement ---
+  window.addEventListener('scroll', handleScrollAnimation);
+  // Exécute la fonction une fois au chargement pour animer les éléments déjà visibles
+  window.addEventListener('load', handleScrollAnimation);
+  handleScrollAnimation();
+</script>
+
+</body>
+
+<script>
+  const toggle = document.querySelector('.menu-toggle');
+
+  toggle.addEventListener('click', () => {
+  toggle.classList.toggle('open');
+  navLinks.classList.toggle('open');
+  });
+</script>
+
+</html>
