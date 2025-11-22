@@ -896,6 +896,7 @@ footer .legal-link:hover {
 
 .offre {
   text-align: center;
+  padding: 1rem;
 }
 
 .seances {
@@ -994,4 +995,5 @@ button:hover {
 
 .mentions-legales section + section {
   margin-top: 2.5rem;
+
 }
